@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="models.Purchase" table="Purchase" schema="internet-shop">
+        <id name="id">
+            <column name="id" sql-type="bigint(20)"/>
+        </id>
+        <property name="clientId">
+            <column name="client_id" sql-type="bigint(20)"/>
+        </property>
+        <property name="date">
+            <column name="date" sql-type="datetime"/>
+        </property>
+        <property name="address">
+            <column name="address" sql-type="varchar(255)"/>
+        </property>
+        <property name="status">
+            <column name="status" sql-type="varchar(10)" length="10"/>
+        </property>
+        <property name="deliveryMethod">
+            <column name="delivery_method" sql-type="binary(1)"/>
+        </property>
+        <property name="paymentMethod">
+            <column name="payment_method" sql-type="binary(1)"/>
+        </property>
+        <many-to-one name="clientByClientId" class="models.Client">
+            <column name="client_id"/>
+        </many-to-one>
+        <set name="purchaseProductsById" inverse="true">
+            <key>
+                <column name="purchase_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="models.PurchaseProducts"/>
+        </set>
+    </class>
+</hibernate-mapping>
