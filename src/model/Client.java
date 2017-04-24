@@ -1,10 +1,12 @@
-package models;
+package model;
 
+import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by zhigan on 28.03.17.
+ * Created by zhigan on 30.03.17.
  */
+@Entity
 public class Client {
     private Long id;
     private String fullname;
@@ -13,6 +15,9 @@ public class Client {
     private String email;
     private Collection<Purchase> purchasesById;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
@@ -21,6 +26,8 @@ public class Client {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "fullname", nullable = false, length = 127)
     public String getFullname() {
         return fullname;
     }
@@ -29,6 +36,8 @@ public class Client {
         this.fullname = fullname;
     }
 
+    @Basic
+    @Column(name = "address", nullable = false, length = 255)
     public String getAddress() {
         return address;
     }
@@ -37,6 +46,8 @@ public class Client {
         this.address = address;
     }
 
+    @Basic
+    @Column(name = "phone", nullable = false, precision = 0)
     public Integer getPhone() {
         return phone;
     }
@@ -45,6 +56,8 @@ public class Client {
         this.phone = phone;
     }
 
+    @Basic
+    @Column(name = "email", nullable = false, length = 30)
     public String getEmail() {
         return email;
     }
@@ -79,6 +92,7 @@ public class Client {
         return result;
     }
 
+    @OneToMany(mappedBy = "clientByClientId")
     public Collection<Purchase> getPurchasesById() {
         return purchasesById;
     }

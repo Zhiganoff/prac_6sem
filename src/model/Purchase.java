@@ -1,15 +1,16 @@
-package models;
+package model;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * Created by zhigan on 28.03.17.
+ * Created by zhigan on 30.03.17.
  */
+@Entity
 public class Purchase {
     private Long id;
-    private Long clientId;
     private Timestamp date;
     private String address;
     private String status;
@@ -18,6 +19,9 @@ public class Purchase {
     private Client clientByClientId;
     private Collection<PurchaseProducts> purchaseProductsById;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
@@ -26,14 +30,8 @@ public class Purchase {
         this.id = id;
     }
 
-    public Long getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
-    }
-
+    @Basic
+    @Column(name = "date", nullable = false)
     public Timestamp getDate() {
         return date;
     }
@@ -42,6 +40,8 @@ public class Purchase {
         this.date = date;
     }
 
+    @Basic
+    @Column(name = "address", nullable = false, length = 255)
     public String getAddress() {
         return address;
     }
@@ -50,6 +50,8 @@ public class Purchase {
         this.address = address;
     }
 
+    @Basic
+    @Column(name = "status", nullable = false, length = 10)
     public String getStatus() {
         return status;
     }
@@ -58,6 +60,8 @@ public class Purchase {
         this.status = status;
     }
 
+    @Basic
+    @Column(name = "delivery_method", nullable = false)
     public byte[] getDeliveryMethod() {
         return deliveryMethod;
     }
@@ -66,6 +70,8 @@ public class Purchase {
         this.deliveryMethod = deliveryMethod;
     }
 
+    @Basic
+    @Column(name = "payment_method", nullable = false)
     public byte[] getPaymentMethod() {
         return paymentMethod;
     }
@@ -82,7 +88,6 @@ public class Purchase {
         Purchase purchase = (Purchase) o;
 
         if (id != null ? !id.equals(purchase.id) : purchase.id != null) return false;
-        if (clientId != null ? !clientId.equals(purchase.clientId) : purchase.clientId != null) return false;
         if (date != null ? !date.equals(purchase.date) : purchase.date != null) return false;
         if (address != null ? !address.equals(purchase.address) : purchase.address != null) return false;
         if (status != null ? !status.equals(purchase.status) : purchase.status != null) return false;
@@ -95,7 +100,6 @@ public class Purchase {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (clientId != null ? clientId.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
@@ -104,6 +108,8 @@ public class Purchase {
         return result;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
     public Client getClientByClientId() {
         return clientByClientId;
     }
@@ -112,6 +118,7 @@ public class Purchase {
         this.clientByClientId = clientByClientId;
     }
 
+    @OneToMany(mappedBy = "purchaseByPurchaseId")
     public Collection<PurchaseProducts> getPurchaseProductsById() {
         return purchaseProductsById;
     }

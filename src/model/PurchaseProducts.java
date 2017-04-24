@@ -1,8 +1,12 @@
-package models;
+package model;
+
+import javax.persistence.*;
 
 /**
- * Created by zhigan on 28.03.17.
+ * Created by zhigan on 30.03.17.
  */
+@Entity
+@IdClass(PurchaseProductsPK.class)
 public class PurchaseProducts {
     private Long purchaseId;
     private Long productId;
@@ -10,6 +14,8 @@ public class PurchaseProducts {
     private Purchase purchaseByPurchaseId;
     private Product productByProductId;
 
+    @Id
+    @Column(name = "purchase_id", nullable = false)
     public Long getPurchaseId() {
         return purchaseId;
     }
@@ -18,6 +24,8 @@ public class PurchaseProducts {
         this.purchaseId = purchaseId;
     }
 
+    @Id
+    @Column(name = "product_id", nullable = false)
     public Long getProductId() {
         return productId;
     }
@@ -26,6 +34,8 @@ public class PurchaseProducts {
         this.productId = productId;
     }
 
+    @Basic
+    @Column(name = "num", nullable = false)
     public Integer getNum() {
         return num;
     }
@@ -56,6 +66,8 @@ public class PurchaseProducts {
         return result;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "purchase_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public Purchase getPurchaseByPurchaseId() {
         return purchaseByPurchaseId;
     }
@@ -64,6 +76,8 @@ public class PurchaseProducts {
         this.purchaseByPurchaseId = purchaseByPurchaseId;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public Product getProductByProductId() {
         return productByProductId;
     }

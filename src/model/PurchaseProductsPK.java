@@ -1,14 +1,18 @@
-package models;
+package model;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by zhigan on 28.03.17.
+ * Created by zhigan on 30.03.17.
  */
 public class PurchaseProductsPK implements Serializable {
     private Long purchaseId;
     private Long productId;
 
+    @Column(name = "purchase_id", nullable = false)
+    @Id
     public Long getPurchaseId() {
         return purchaseId;
     }
@@ -17,6 +21,8 @@ public class PurchaseProductsPK implements Serializable {
         this.purchaseId = purchaseId;
     }
 
+    @Column(name = "product_id", nullable = false)
+    @Id
     public Long getProductId() {
         return productId;
     }

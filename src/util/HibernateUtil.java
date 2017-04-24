@@ -1,22 +1,24 @@
 package util;
 
-/**
- * Created by zhigan on 27.03.17.
- */
-
-import org.hibernate.cfg.Configuration;
-import org.hibernate.SessionFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class HibernateUtil {
-    private static final SessionFactory sessionFactory;
+
+    private static final String PERSISTENT_UNIT_NAME = "jpa";
+
+    private static final EntityManagerFactory emf;
+
     static {
-        System.out.println("static\n");
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-        System.out.println("after static\n");
+        emf = Persistence.createEntityManagerFactory(PERSISTENT_UNIT_NAME);
     }
 
-    public static SessionFactory getSessionFactory() {
-        System.out.println("getsessionFactory\n");
-        return sessionFactory;
+    public static EntityManager getEm() {
+        return emf.createEntityManager();
+    }
+
+    public static void closeEMF() {
+        emf.close();
     }
 }

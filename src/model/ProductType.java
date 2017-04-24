@@ -1,15 +1,20 @@
-package models;
+package model;
 
+import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by zhigan on 28.03.17.
+ * Created by zhigan on 30.03.17.
  */
+@Entity
 public class ProductType {
     private Integer id;
     private String name;
     private Collection<Product> productsById;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }
@@ -18,6 +23,8 @@ public class ProductType {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "name", nullable = false, length = 100)
     public String getName() {
         return name;
     }
@@ -46,6 +53,7 @@ public class ProductType {
         return result;
     }
 
+    @OneToMany(mappedBy = "productTypeByProducttypeId")
     public Collection<Product> getProductsById() {
         return productsById;
     }

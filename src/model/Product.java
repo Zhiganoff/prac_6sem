@@ -1,14 +1,14 @@
-package models;
+package model;
 
+import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by zhigan on 28.03.17.
+ * Created by zhigan on 30.03.17.
  */
+@Entity
 public class Product {
-    private Long productId;
-    private Integer producttypeId;
-    private Long producerId;
+    private Long id;
     private String name;
     private Integer cost;
     private Integer num;
@@ -18,30 +18,19 @@ public class Product {
     private Producer producerByProducerId;
     private Collection<PurchaseProducts> purchaseProductsByProductId;
 
-    public Long getProductId() {
-        return productId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    public Long getId() {
+        return id;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setId(Long productId) {
+        this.id = productId;
     }
 
-    public Integer getProducttypeId() {
-        return producttypeId;
-    }
-
-    public void setProducttypeId(Integer producttypeId) {
-        this.producttypeId = producttypeId;
-    }
-
-    public Long getProducerId() {
-        return producerId;
-    }
-
-    public void setProducerId(Long producerId) {
-        this.producerId = producerId;
-    }
-
+    @Basic
+    @Column(name = "name", nullable = false, length = 63)
     public String getName() {
         return name;
     }
@@ -50,6 +39,8 @@ public class Product {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "cost", nullable = false)
     public Integer getCost() {
         return cost;
     }
@@ -58,6 +49,8 @@ public class Product {
         this.cost = cost;
     }
 
+    @Basic
+    @Column(name = "num", nullable = false)
     public Integer getNum() {
         return num;
     }
@@ -66,6 +59,8 @@ public class Product {
         this.num = num;
     }
 
+    @Basic
+    @Column(name = "size", nullable = false, length = 15)
     public String getSize() {
         return size;
     }
@@ -74,6 +69,8 @@ public class Product {
         this.size = size;
     }
 
+    @Basic
+    @Column(name = "properties", nullable = false, length = -1)
     public String getProperties() {
         return properties;
     }
@@ -89,10 +86,7 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (productId != null ? !productId.equals(product.productId) : product.productId != null) return false;
-        if (producttypeId != null ? !producttypeId.equals(product.producttypeId) : product.producttypeId != null)
-            return false;
-        if (producerId != null ? !producerId.equals(product.producerId) : product.producerId != null) return false;
+        if (id != null ? !id.equals(product.id) : product.id != null) return false;
         if (name != null ? !name.equals(product.name) : product.name != null) return false;
         if (cost != null ? !cost.equals(product.cost) : product.cost != null) return false;
         if (num != null ? !num.equals(product.num) : product.num != null) return false;
@@ -104,9 +98,7 @@ public class Product {
 
     @Override
     public int hashCode() {
-        int result = productId != null ? productId.hashCode() : 0;
-        result = 31 * result + (producttypeId != null ? producttypeId.hashCode() : 0);
-        result = 31 * result + (producerId != null ? producerId.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         result = 31 * result + (num != null ? num.hashCode() : 0);
@@ -115,6 +107,8 @@ public class Product {
         return result;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "producttype_id", referencedColumnName = "id", nullable = false)
     public ProductType getProductTypeByProducttypeId() {
         return productTypeByProducttypeId;
     }
@@ -123,6 +117,8 @@ public class Product {
         this.productTypeByProducttypeId = productTypeByProducttypeId;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "producer_id", referencedColumnName = "id", nullable = false)
     public Producer getProducerByProducerId() {
         return producerByProducerId;
     }
@@ -131,6 +127,7 @@ public class Product {
         this.producerByProducerId = producerByProducerId;
     }
 
+    @OneToMany(mappedBy = "productByProductId")
     public Collection<PurchaseProducts> getPurchaseProductsByProductId() {
         return purchaseProductsByProductId;
     }

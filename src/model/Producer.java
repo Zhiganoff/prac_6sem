@@ -1,16 +1,21 @@
-package models;
+package model;
 
+import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by zhigan on 28.03.17.
+ * Created by zhigan on 30.03.17.
  */
+@Entity
 public class Producer {
     private Long id;
     private String name;
     private Integer phone;
     private Collection<Product> productsById;
 
+    @Id
+
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
@@ -19,6 +24,8 @@ public class Producer {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "name", nullable = false, length = 100)
     public String getName() {
         return name;
     }
@@ -27,6 +34,8 @@ public class Producer {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "phone", nullable = false, precision = 0)
     public Integer getPhone() {
         return phone;
     }
@@ -57,6 +66,7 @@ public class Producer {
         return result;
     }
 
+    @OneToMany(mappedBy = "producerByProducerId")
     public Collection<Product> getProductsById() {
         return productsById;
     }
