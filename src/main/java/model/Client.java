@@ -2,8 +2,6 @@ package model;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by zhigan on 30.03.17.
@@ -15,7 +13,7 @@ public class Client {
     private String address;
     private Integer phone;
     private String email;
-    private List<Purchase> purchasesById;
+    private Collection<Purchase> purchasesById;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,17 +93,11 @@ public class Client {
     }
 
     @OneToMany(mappedBy = "clientByClientId")
-    public List<Purchase> getPurchasesById() {
+    public Collection<Purchase> getPurchasesById() {
         return purchasesById;
     }
 
-    public void setPurchasesById(List<Purchase> purchasesById) {
+    public void setPurchasesById(Collection<Purchase> purchasesById) {
         this.purchasesById = purchasesById;
-    }
-
-    // String Representation:
-    @Override
-    public String toString() {
-        return getFullname() + " (living on " + getAddress() + ")";
     }
 }

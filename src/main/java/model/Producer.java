@@ -14,7 +14,7 @@ public class Producer {
     private Collection<Product> productsById;
 
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;

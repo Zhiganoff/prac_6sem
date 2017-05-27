@@ -14,8 +14,8 @@ public class Purchase {
     private Timestamp date;
     private String address;
     private String status;
-    private byte[] deliveryMethod;
-    private byte[] paymentMethod;
+    private Boolean deliveryMethod;
+    private Boolean paymentMethod;
     private Client clientByClientId;
     private Collection<PurchaseProducts> purchaseProductsById;
 
@@ -62,21 +62,21 @@ public class Purchase {
 
     @Basic
     @Column(name = "delivery_method", nullable = false)
-    public byte[] getDeliveryMethod() {
+    public Boolean getDeliveryMethod() {
         return deliveryMethod;
     }
 
-    public void setDeliveryMethod(byte[] deliveryMethod) {
+    public void setDeliveryMethod(Boolean deliveryMethod) {
         this.deliveryMethod = deliveryMethod;
     }
 
     @Basic
     @Column(name = "payment_method", nullable = false)
-    public byte[] getPaymentMethod() {
+    public Boolean getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(byte[] paymentMethod) {
+    public void setPaymentMethod(Boolean paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
@@ -91,8 +91,8 @@ public class Purchase {
         if (date != null ? !date.equals(purchase.date) : purchase.date != null) return false;
         if (address != null ? !address.equals(purchase.address) : purchase.address != null) return false;
         if (status != null ? !status.equals(purchase.status) : purchase.status != null) return false;
-        if (!Arrays.equals(deliveryMethod, purchase.deliveryMethod)) return false;
-        if (!Arrays.equals(paymentMethod, purchase.paymentMethod)) return false;
+//        if (!Arrays.equals(deliveryMethod, purchase.deliveryMethod)) return false;
+//        if (!Arrays.equals(paymentMethod, purchase.paymentMethod)) return false;
 
         return true;
     }
@@ -103,8 +103,8 @@ public class Purchase {
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(deliveryMethod);
-        result = 31 * result + Arrays.hashCode(paymentMethod);
+//        result = 31 * result + Arrays.hashCode(deliveryMethod);
+//        result = 31 * result + Arrays.hashCode(paymentMethod);
         return result;
     }
 

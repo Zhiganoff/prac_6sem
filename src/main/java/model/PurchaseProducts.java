@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @IdClass(PurchaseProductsPK.class)
-public class PurchaseProducts {
+public class PurchaseProducts{
     private Long purchaseId;
     private Long productId;
     private Integer num;

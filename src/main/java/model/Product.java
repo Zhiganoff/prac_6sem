@@ -1,5 +1,9 @@
 package model;
 
+import DAO.impl.ProducerDAO;
+import DAO.impl.ProductTypeDAO;
+import control.ProductBridge;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -17,6 +21,21 @@ public class Product {
     private ProductType productTypeByProducttypeId;
     private Producer producerByProducerId;
     private Collection<PurchaseProducts> purchaseProductsByProductId;
+
+    public Product() {}
+
+    public Product(ProductBridge pb) {
+
+        this.name = pb.getName();
+        this.cost = pb.getCost();
+        this.num = pb.getNum();
+        this.size = pb.getSize();
+        this.properties = pb.getProperties();
+        ProducerDAO producerDAO = new ProducerDAO();
+        this.producerByProducerId = producerDAO.getById(pb.getProducerId());
+        ProductTypeDAO productTypeDAO = new ProductTypeDAO();
+        this.productTypeByProducttypeId = productTypeDAO.getById(pb.getProducttypeId());
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,6 +135,10 @@ public class Product {
     public void setProductTypeByProducttypeId(ProductType productTypeByProducttypeId) {
         this.productTypeByProducttypeId = productTypeByProducttypeId;
     }
+//    public void setProductTypeByProducttypeId(Long productTypeId) {
+//        ProductTypeDAO productTypeDAO = new ProductTypeDAO();
+//        this.productTypeByProducttypeId = productTypeDAO.getById(productTypeId);
+//    }
 
     @ManyToOne
     @JoinColumn(name = "producer_id", referencedColumnName = "id", nullable = false)
@@ -126,6 +149,10 @@ public class Product {
     public void setProducerByProducerId(Producer producerByProducerId) {
         this.producerByProducerId = producerByProducerId;
     }
+//    public void setProducerByProducerId(Long producerId) {
+//        ProducerDAO producerDAO = new ProducerDAO();
+//        this.producerByProducerId = producerDAO.getById(producerId);
+//    }
 
     @OneToMany(mappedBy = "productByProductId")
     public Collection<PurchaseProducts> getPurchaseProductsByProductId() {
